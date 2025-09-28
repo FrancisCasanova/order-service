@@ -1,4 +1,4 @@
-# 📦 Order Service ![Docker Logo](https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png)
+# 📦 Order Service !
 
 [![Java](https://img.shields.io/badge/Java-17-red?logo=java&logoColor=white)](https://www.oracle.com/java/)  
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?logo=spring&logoColor=white)](https://spring.io/projects/spring-boot)  
