@@ -22,13 +22,6 @@ Fluxo do desafio:
 
 ```
 sequenceDiagram
-    autonumber
-    participant A as Produto Externo A
-    participant MQ as RabbitMQ
-    participant Order as Serviço de Pedidos
-    participant DB as Banco de Dados
-    participant B as Produto Externo B
-
     A->>MQ: Envia Pedido (JSON)
     MQ->>Order: Entrega Mensagem
     Order->>Order: Valida e Calcula Total
@@ -116,7 +109,10 @@ GET http://localhost:9091/api/orders
 
 ## 🛠️ Configuração
 
-Arquivo `application.properties` já preparado para rodar com o **docker-compose**:
+O projeto já está preparado para rodar com **Docker Compose**.  
+Você pode usar o `docker-compose.yml` da raiz do projeto ou o que está na pasta `info/`.  
+
+### ▶️ application.properties
 
 ```properties
 server.port=9091
@@ -136,4 +132,53 @@ rabbitmq.password=admin
 rabbitmq.port=5672
 ```
 
----
+### ▶️ Como rodar
+
+```bash
+# Opção 1 - Executar o docker-compose da raiz do projeto
+docker-compose up -d
+# RabbitMQ em localhost:5672 (painel em http://localhost:15672)
+
+# Opção 2 - Executar o docker-compose da pasta info
+cd info
+docker-compose up -d
+# RabbitMQ em localhost:8090 (painel em http://localhost:8080)
+```
+
+### 📂 Conteúdo do `info/docker-compose.yml`
+
+```yaml
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: orderdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "8090:5672"    
+      - "8080:15672"  
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
+```
+📌 **Importante:** escolha apenas uma das opções (raiz ou pasta `info/`) e mantenha a porta configurada corretamente no `application.properties`.
