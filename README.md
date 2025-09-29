@@ -182,3 +182,8 @@ volumes:
   rabbitmq_data:
 ```
 📌 **Importante:** escolha apenas uma das opções (raiz ou pasta `info/`) e mantenha a porta configurada corretamente no `application.properties`.
+
+## Arquitetura do Projeto
+
+![Diagrama](docs/arquitetura.png)
+
